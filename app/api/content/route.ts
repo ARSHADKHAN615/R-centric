@@ -64,7 +64,6 @@ export async function POST(request: Request) {
     const { db } = await connectToDatabase();
     const content = await request.json();
 
-    console.log(content);
     await db.collection<ContentDocument>('content').updateOne(
       { _id: 'landing_page' },
       { 

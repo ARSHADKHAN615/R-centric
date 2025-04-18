@@ -19,11 +19,10 @@ export default function Hero({ title, subtitle, backgroundImage, backgroundVideo
       setIsMobile(window.innerWidth < 768);
     };
 
-    console.log('backgroundImage', backgroundImage);
-    console.log('backgroundVideo', backgroundVideo);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
