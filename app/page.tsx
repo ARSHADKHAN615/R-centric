@@ -1,103 +1,175 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState } from 'react';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import About from './components/About';
+import Features from './components/Features';
+import Footer from './components/Footer';
+import EditButton from './components/EditButton';
+import ParallaxSection from './components/ParallaxSection';
+import { Loader2 } from "lucide-react";
+
+interface ContentData {
+  hero: {
+    title: string;
+    subtitle: string;
+    backgroundImage: string;
+    backgroundVideo?: string;
+  };
+  about: {
+    heading: string;
+    subheading: string;
+    description: string;
+    image: string;
+    stats: Array<{
+      value: string;
+      label: string;
+    }>;
+  };
+  features: Array<{
+    title: string;
+    description: string;
+    image: string;
+  }>;
+  footer: {
+    logo: string;
+    tagline: string;
+    description: string;
+    socialLinks: {
+      facebook?: string;
+      instagram?: string;
+      linkedin?: string;
+      twitter?: string;
+    };
+  };
+  parallaxSections: Array<{
+    title: string;
+    description: string;
+    image: string;
+  }>;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [content, setContent] = useState<ContentData>({
+    hero: {
+      title: 'LUXURY LIVING REDEFINED',
+      subtitle: 'Experience the epitome of sophistication in the heart of the city',
+      backgroundImage: '/default-hero.jpg',
+      backgroundVideo: '/intro_video.mp4',
+    },
+    about: {
+      heading: 'A LEGACY OF LUXURY',
+      subheading: 'Creating Timeless Experiences',
+      description: 'Nestled in the most prestigious location, our development stands as a testament to architectural excellence and luxurious living. Each residence is meticulously crafted to offer unparalleled comfort and sophistication.',
+      image: '/about.jpg',
+      stats: [
+        { value: '45+', label: 'FLOORS' },
+        { value: '200', label: 'RESIDENCES' },
+        { value: '5★', label: 'AMENITIES' },
+        { value: '24/7', label: 'CONCIERGE' },
+      ],
+    },
+    features: [
+      {
+        title: 'Luxurious Living Spaces',
+        description: 'Experience the epitome of comfort and style in our meticulously designed living spaces, where every detail has been carefully considered to create the perfect ambiance.',
+        image: '/feature1.jpg',
+      },
+      {
+        title: 'World-Class Amenities',
+        description: 'Indulge in our extensive range of amenities, from state-of-the-art fitness centers to serene spa facilities, all designed to enhance your lifestyle.',
+        image: '/feature2.jpg',
+      },
+    ],
+    footer: {
+      logo: '/omniyat-logo.png',
+      tagline: 'THE ART OF ELEVATION',
+      description: 'OMNIYAT is a renowned developer of luxurious architectural masterpieces. The Art of Elevation embodies our dedication to imagining the extraordinary and building it into reality.',
+      socialLinks: {
+        facebook: 'https://facebook.com/omniyat',
+        instagram: 'https://instagram.com/omniyat',
+        linkedin: 'https://linkedin.com/company/omniyat',
+        twitter: 'https://twitter.com/omniyat',
+      },
+    },
+    parallaxSections: [
+      {
+        title: 'Title 1',
+        description: 'Description 1',
+        image: '/parallax1.jpg',
+      },
+      {
+        title: 'Title 2',
+        description: 'Description 2',
+        image: '/parallax2.jpg',
+      },
+    ],
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await fetch('/api/content');
+        const data = await response.json();
+        if (data && !data.error) {
+          setContent(prev => ({
+            ...prev,
+            ...data,
+            hero: {
+              ...prev.hero,
+              backgroundImage: data.hero.backgroundImage,
+              backgroundVideo: data.hero.backgroundVideo,
+            },
+          }));
+
+          console.log('data', data);
+          console.log('data.hero', data.hero);
+        }
+      } catch (error) {
+        console.error('Error fetching content:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchContent();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div style={{ fontFamily: 'Cormorant Garamond' }} className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin text-gray-500 mx-auto mb-4" />
+          <p className="text-gray-600">Loading content...</p>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ fontFamily: 'Cormorant Garamond' }}>
+      <Header />
+      <main>
+        <Hero {...content.hero} />
+        <About {...content.about} />
+        <ParallaxSection
+          key={0}
+          {...content.parallaxSections[0]}
+        />
+        <Features 
+          heading="EXCEPTIONAL FEATURES"
+          subheading="Discover Our Unique Offerings"
+          features={content.features} 
+        />
+        <ParallaxSection
+          key={1}
+          {...content.parallaxSections[1]}
+        />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Footer content={content.footer} />
+      <EditButton />
     </div>
   );
 }
