@@ -67,12 +67,14 @@ export default function Features({ heading, subheading, features }: FeaturesProp
                   viewport={{ once: false }}
                   className="absolute inset-0"
                 >
-                  <Image
-                    src={feature.image}
-                    alt={feature.title}
-                    fill
-                    className="object-cover"
-                  />
+                  {feature.image && (
+                    <Image
+                      src={feature.image}
+                      alt={feature.title}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300" />
                 </motion.div>
               </motion.div>

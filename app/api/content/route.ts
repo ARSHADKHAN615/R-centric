@@ -1,30 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
-
-interface ContentDocument {
-  _id: string;
-  hero: {
-    title: string;
-    subtitle: string;
-    backgroundImage: string;
-    backgroundVideo?: string;
-  };
-  about: {
-    heading: string;
-    subheading: string;
-    description: string;
-    image: string;
-    stats: Array<{
-      value: string;
-      label: string;
-    }>;
-  };
-  features: Array<{
-    title: string;
-    description: string;
-    image: string;
-  }>;
-}
+import { ContentDocument } from '@/types/content';
 
 const defaultContent: Omit<ContentDocument, '_id'> = {
   hero: {
@@ -55,6 +31,24 @@ const defaultContent: Omit<ContentDocument, '_id'> = {
       title: 'World-Class Amenities',
       description: 'Indulge in our extensive range of amenities, from state-of-the-art fitness centers to serene spa facilities.',
       image: '/feature2.jpg',
+    },
+  ],
+  footer: {
+    logo: '/logo.png',
+    tagline: 'Luxury Living Redefined',
+    description: 'Experience the epitome of sophistication in the heart of the city',
+    socialLinks: {
+      facebook: '',
+      instagram: '',
+      linkedin: '',
+      twitter: '',
+    },
+  },
+  parallaxSections: [
+    {
+      title: 'Unparalleled Views',
+      description: 'Enjoy breathtaking panoramic views of the city skyline from every residence',
+      image: '/parallax1.jpg',
     },
   ],
 };
@@ -92,7 +86,6 @@ export async function GET() {
       { _id: 'landing_page' }
     );
 
-    console.log(content);
     return NextResponse.json(content || {
       _id: 'landing_page',
       ...defaultContent

@@ -48,13 +48,15 @@ export default function Hero({ title, subtitle, backgroundImage, backgroundVideo
               transition={{ duration: 2.5, ease: "easeOut" }}
               className="absolute inset-0"
             >
-              <Image
-                src={backgroundImage}
-                alt="Luxury Property"
-                fill
-                className="object-cover"
-                priority
-              />
+              {backgroundImage && (
+                <Image
+                  src={backgroundImage}
+                  alt="Luxury Property"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              )}
             </motion.div>
           </video>
         </motion.div>
@@ -65,13 +67,15 @@ export default function Hero({ title, subtitle, backgroundImage, backgroundVideo
           transition={{ duration: 2.5, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          <Image
-            src={backgroundImage}
-            alt="Luxury Property"
-            fill
-            className="object-cover"
-            priority
-          />
+          {backgroundImage && (
+            <Image
+              src={backgroundImage}
+              alt="Luxury Property"
+              fill
+              className="object-cover"
+              priority
+            />
+          )}
         </motion.div>
       )}
       
@@ -116,12 +120,12 @@ export default function Hero({ title, subtitle, backgroundImage, backgroundVideo
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.8 }}
-              className="space-x-6"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
             >
-              <button className="border border-white px-8 py-3 text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+              <button className="w-full sm:w-auto border border-white px-6 sm:px-8 py-3 text-xs sm:text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-300 cursor-pointer">
                 DISCOVER MORE
               </button>
-              <button className="border border-white px-8 py-3 text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+              <button className="w-full sm:w-auto border border-white px-6 sm:px-8 py-3 text-xs sm:text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-300 cursor-pointer">
                 CONTACT US
               </button>
             </motion.div>

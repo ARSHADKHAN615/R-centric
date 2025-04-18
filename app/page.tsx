@@ -9,46 +9,7 @@ import Footer from './components/Footer';
 import EditButton from './components/EditButton';
 import ParallaxSection from './components/ParallaxSection';
 import { Loader2 } from "lucide-react";
-
-interface ContentData {
-  hero: {
-    title: string;
-    subtitle: string;
-    backgroundImage: string;
-    backgroundVideo?: string;
-  };
-  about: {
-    heading: string;
-    subheading: string;
-    description: string;
-    image: string;
-    stats: Array<{
-      value: string;
-      label: string;
-    }>;
-  };
-  features: Array<{
-    title: string;
-    description: string;
-    image: string;
-  }>;
-  footer: {
-    logo: string;
-    tagline: string;
-    description: string;
-    socialLinks: {
-      facebook?: string;
-      instagram?: string;
-      linkedin?: string;
-      twitter?: string;
-    };
-  };
-  parallaxSections: Array<{
-    title: string;
-    description: string;
-    image: string;
-  }>;
-}
+import { ContentData } from '@/types/content';
 
 export default function Home() {
   const [content, setContent] = useState<ContentData>({
@@ -119,13 +80,12 @@ export default function Home() {
             ...data,
             hero: {
               ...prev.hero,
+              title: data.hero.title,
+              subtitle: data.hero.subtitle,
               backgroundImage: data.hero.backgroundImage,
               backgroundVideo: data.hero.backgroundVideo,
             },
           }));
-
-          console.log('data', data);
-          console.log('data.hero', data.hero);
         }
       } catch (error) {
         console.error('Error fetching content:', error);

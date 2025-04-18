@@ -192,11 +192,11 @@ export default function AdminPage() {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
         <h1 className="text-2xl sm:text-3xl font-light">Content Management</h1>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button variant="outline" onClick={() => window.open('/', '_blank')} className="flex items-center">
+          <Button variant="outline" onClick={() => window.open('/', '_blank')} className="flex items-center cursor-pointer">
             <ExternalLink className="mr-2 h-4 w-4" />
             Go to Site
           </Button>
-          <Button onClick={handleSave} disabled={isSaving}>
+          <Button onClick={handleSave} disabled={isSaving} className="cursor-pointer">
             {isSaving ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -286,7 +286,7 @@ export default function AdminPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Background Video (optional)</label>
+                <label className="text-sm font-medium">Background Video</label>
                 <div className="flex flex-col gap-4">
                   <CldUploadWidget
                     uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!}
