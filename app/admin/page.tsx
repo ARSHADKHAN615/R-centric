@@ -10,49 +10,10 @@ import { Loader2, Upload, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
+import { ContentData } from '@/types/content';
 
 interface CloudinaryUploadWidgetInfo {
   secure_url: string;
-}
-
-interface ContentData {
-  hero: {
-    title: string;
-    subtitle: string;
-    backgroundImage: string;
-    backgroundVideo?: string;
-  };
-  about: {
-    heading: string;
-    subheading: string;
-    description: string;
-    image: string;
-    stats: Array<{
-      value: string;
-      label: string;
-    }>;
-  };
-  parallaxSections: Array<{
-    image: string;
-    title: string;
-    description: string;
-  }>;
-  features: Array<{
-    title: string;
-    description: string;
-    image: string;
-  }>;
-  footer: {
-    logo: string;
-    tagline: string;
-    description: string;
-    socialLinks: {
-      facebook: string;
-      instagram: string;
-      linkedin: string;
-      twitter: string;
-    };
-  };
 }
 
 const defaultContent: ContentData = {
