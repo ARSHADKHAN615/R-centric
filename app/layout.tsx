@@ -3,6 +3,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'sonner';
+import SmoothScroll from './components/SmoothScroll';
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorantGaramond.variable} ${inter.variable} antialiased`}>
       <body className="font-cormorant">
+        <SmoothScroll />
         {children}
         <Toaster position="bottom-right" />
       </body>
